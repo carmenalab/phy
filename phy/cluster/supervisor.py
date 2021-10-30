@@ -557,7 +557,8 @@ class ActionCreator(object):
 # -----------------------------------------------------------------------------
 
 def _is_group_masked(group):
-    return group in ('noise', 'mua')
+    # return group in ('noise', 'mua')
+    return False
 
 
 class Supervisor(object):
@@ -758,7 +759,7 @@ class Supervisor(object):
 
         # Create the cluster view.
         self.cluster_view = ClusterView(
-            gui, data=self.cluster_info, columns=self.columns, sort=sort)
+            gui, data=self.cluster_info, columns=self.columns + ['group'], sort=sort)
         # Update the action flow and similarity view when selection changes.
         connect(self._clusters_selected, event='select', sender=self.cluster_view)
 
