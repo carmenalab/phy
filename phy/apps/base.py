@@ -988,6 +988,7 @@ class BaseController(object):
             self.cluster_metrics['sh'] = self.get_channel_shank
         self.cluster_metrics['depth'] = self.get_probe_depth
         self.cluster_metrics['fr'] = self.get_mean_firing_rate
+        self.cluster_metrics['depth_id'] = self.get_probe_depth_cluster_id
 
     def _set_similarity_functions(self):
         """Set the `similarity_functions` dictionary that maps similarity names to functions
@@ -1216,6 +1217,10 @@ class BaseController(object):
         """Return the depth of a cluster."""
         channel_id = self.get_best_channel(cluster_id)
         return 0 if channel_id is None else self.model.channel_positions[channel_id, 1]
+
+    def get_probe_depth_cluster_id(self, cluster_id):
+        depth = self.get_probe_depth(cluster_id)
+        return f'{int(depth):05d}_{int(cluster_id):05d}'
 
     def get_clusters_on_channel(self, channel_id):
         """Return all clusters which have the specified channel among their best channels."""
